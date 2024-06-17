@@ -6,6 +6,7 @@ function renderTodo(todo) {
 
   if (todo.deleted) {
     item.remove();
+    if (todoItems.length === 0) list.innerHTML = "";
     return;
   }
 
