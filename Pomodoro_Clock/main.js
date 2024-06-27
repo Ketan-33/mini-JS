@@ -12,6 +12,8 @@ mainButton.addEventListener("click", () => {
   const { action } = mainButton.dataset;
   if (action === "start") {
     startTimer();
+  } else {
+    stopTimer();
   }
 });
 
@@ -52,6 +54,14 @@ function startTimer() {
   }, 1000);
 }
 
+function stopTimer() {
+  clearInterval(interval);
+
+  mainButton.dataset.action = "start";
+  mainButton.textContent = "start";
+  mainButton.classList.remove("active");
+}
+
 function updateClock() {
   const { remainingTime } = timer;
   const minutes = `${remainingTime.minutes}`.padStart(2, "0");
@@ -86,6 +96,7 @@ function handleMode(event) {
   if (!mode) return;
 
   switchMode(mode);
+  stopTimer();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
