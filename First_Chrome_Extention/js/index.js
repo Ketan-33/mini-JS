@@ -12,4 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
       setImage(data.nextImage);
     }
   });
+
+  chrome.runtime.sendMessage({ command: "next-image" });
 });

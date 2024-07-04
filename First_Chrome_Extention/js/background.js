@@ -40,3 +40,9 @@ async function nextImage() {
 }
 
 chrome.runtime.onInstalled.addListener(nextImage);
+
+chrome.runtime.onMessage.addListener((request) => {
+  if (request.command === "next-image") {
+    nextImage();
+  }
+});
