@@ -17,6 +17,8 @@ async function getRandomPhoto() {
 
   let response = await fetch(endpoint, { headers });
   const json = await validateResponse(response).json();
+  response = await fetch(json.urls.raw + "&q=85&w=2000");
+  json.blob = await validateResponse(response).blob();
 
   return json;
 }
@@ -24,7 +26,14 @@ async function getRandomPhoto() {
 async function nextImage() {
   try {
     const image = await getRandomPhoto();
-    console.log(image);
+
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(image.blob);
+    fileReader.addEventListener("load", (event) => {
+      const { result } = event.target;
+      image.base64 = result;
+      chrome.storage.local.set({ nextImage: image });
+    });
   } catch (err) {
     console.log(err);
   }
