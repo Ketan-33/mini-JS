@@ -8,9 +8,24 @@ function validateResponse(response) {
   return response;
 }
 
+function getCollections() {
+  return new Promise((resolve) => {
+    chrome.storage.local.get("collections", (result) => {
+      const collections = result.collections || "";
+      resolve(collections);
+    });
+  });
+}
+
 async function getRandomPhoto() {
+  const collections = await getCollections();
+
   const endpoint =
     "https://api.unsplash.com/photos/random?orientation=landscape";
+
+  if (collections) {
+    endpoint += `&collections=${collections}`;
+  }
 
   const headers = new Headers();
   headers.append("Authorization", `Client-ID ${UNSPLASH_ACCESS_KEY}`);
