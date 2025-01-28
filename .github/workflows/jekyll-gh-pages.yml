@@ -35,6 +35,13 @@ jobs:
         with:
           source: ./
           destination: ./_site
+      - name: Copy index.html files
+        run: |
+          cp First_Chrome_Extention/index.html _site/First_Chrome_Extention/index.html
+          cp Pomodoro_Clock/index.html _site/Pomodoro_Clock/index.html
+          cp Random_Quotes_Generator/index.html _site/Random_Quotes_Generator/index.html
+          cp Todo_list/index.html _site/Todo_list/index.html
+          cp Wikipedia_Search_App/index.html _site/Wikipedia_Search_App/index.html
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
 
